@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { Tabs } from 'antd';
-import { TeamOutlined, UserOutlined, PictureOutlined } from '@ant-design/icons';
+import { TeamOutlined, PictureOutlined } from '@ant-design/icons';
 import Modal from './components/modal';
 import Button from './components/button';
 import Input from './components/input';
@@ -35,33 +35,16 @@ export default function App() {
 
   return (
     <div className="flex items-center justify-center min-h-screen text-center">
-      <Button onClick={openModal} className="bg-black m-2 w-60" ariaLabel="Open Modal">Open Group Info Modal</Button>
-      <Modal isOpen={open} className="w-[500px] h-[550px]" onClose={closeModal} title="Group Info">
-        <Tabs defaultActiveKey="1">
-          <TabPane
-            tab={
-              <span>
-                <TeamOutlined />
-                Group Details
-              </span>
-            }
-            key="1"
-          >
-            {/* Group Details content */}
+      <Button onClick={openModal} className="bg-black text-white w-60" ariaLabel="Open Modal">Open Group Info Modal</Button>
+      <Modal isOpen={open} className="w-[600px] h-[550px] bg-white p-6 rounded-2xl" onClose={closeModal} title="Group info">
+        <Tabs centered defaultActiveKey="1">
+          <TabPane tab={<span className='flex gap-2 text-base'><TeamOutlined />Group Details</span>} key="1">
             <div className="p-4">
               <h2 className="text-lg font-semibold">Group Details</h2>
               <p>This section contains group information, objectives, and other details.</p>
             </div>
           </TabPane>
-          <TabPane
-            tab={
-              <span>
-                <UserOutlined />
-                Members
-              </span>
-            }
-            key="2"
-          >
+          <TabPane tab={<span className='flex gap-2 text-base'><TeamOutlined />Group Members</span>} key="2">
             {/* Members section */}
             <div>
               <Input className="mb-6" id="searchInput" placeholder="Search by name" value={formData.searchInput} onChange={handleChange} />
@@ -70,24 +53,16 @@ export default function App() {
                 {formData.searchInput
                   ? filteredMembers.length > 0
                     ? filteredMembers.map((data) => (
-                        <UserAddCard key={data.id} member={data} onAdd={addMember} />
-                      ))
+                      <UserAddCard key={data.id} member={data} onAdd={addMember} />
+                    ))
                     : <p>No search results found</p>
                   : users.map((data) => (
-                      <UserCard key={data.id} id={data.id} name={data.name} role={data.role} />
-                    ))}
+                    <UserCard key={data.id} id={data.id} name={data.name} role={data.role} />
+                  ))}
               </div>
             </div>
           </TabPane>
-          <TabPane
-            tab={
-              <span>
-                <PictureOutlined />
-                Media
-              </span>
-            }
-            key="3"
-          >
+          <TabPane tab={<span className='flex gap-2 text-base'><PictureOutlined />Media</span>} key="3">
             {/* Media content */}
             <div className="p-4">
               <h2 className="text-lg font-semibold">Media</h2>

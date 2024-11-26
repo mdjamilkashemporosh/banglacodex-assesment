@@ -3,10 +3,21 @@
 @tailwind utilities;
 
 .hide-scrollbar {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-  }
+    @apply overflow-hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none; 
+}
 .hide-scrollbar::-webkit-scrollbar {
-    display: none; /* Webkit Browsers */
-  }
-  
+    display: none; 
+}
+/* Custom styling to remove default shadow from Ant Design Modal */
+:where(.css-dev-only-do-not-override-1x0dypw).ant-modal .ant-modal-content {
+    @apply bg-white; 
+    background-clip: padding-box;
+    box-shadow: none;
+    pointer-events: auto;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+@apply border-none ring-0
+}

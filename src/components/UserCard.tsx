@@ -25,7 +25,7 @@ const UserCard: FC<UserType> = ({ id, name, role }) => {
                 />
                 <p className="text-base">{name}</p>
             </div>
-            <div className="text-center flex items-center gap-6">
+            <div className="text-center flex items-center gap-10">
                 <Dropdown onChange={handleDropdownChange} defaultOption={role} userId={id} />
                 <div className='cursor-pointer' onClick={handleDelete}>
                     <RiDeleteBinLine />
