@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Modal from './components/modal';
 import Button from './components/button';
 import Input from './components/input';
 import Title from './components/title';
 import ProfileCard from './components/profileCard';
-import { useUserContext } from './member-context';
-
+import { useUserContext } from './userContext';
+import { UserType } from './types/user';
+import MemberCard from './components/profile-add'
 export default function App() {
-  const { users } = useUserContext();
+  const { users, allUsers, setUsers } = useUserContext();
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState<{ searchInput: string }>({ searchInput: '' });
 
@@ -19,32 +20,31 @@ export default function App() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  // Filter members from the global user list
-  const filteredMembers = users
-    .filter((user) => user.role === 'member')
+  const filteredMembers = allUsers
+    .filter((user) => !users.some((u) => u.id === user.id))
     .filter((user) => user.name.toLowerCase().includes(formData.searchInput.toLowerCase()));
+
+
+  const addMember = (member: UserType) => {
+    setUsers((prev) => [...prev, member]);
+    // setFormData({ searchInput: '' });
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen text-center">
-      <Button onClick={openModal} className="bg-black m-2 w-60" ariaLabel="Open Modal">
-        Open Group Info Modal
-      </Button>
-
+      <Button onClick={openModal} className="bg-black m-2 w-60" ariaLabel="Open Modal">Open Group Info Modal</Button>
       <Modal isOpen={open} className="w-[500px] h-[500px]" onClose={closeModal} title="Group Info">
         <div>
-          <Input
-            className="mb-6"
-            id="searchInput"
-            placeholder="Search by name"
-            value={formData.searchInput}
-            onChange={handleChange}
-          />
-          <Title>All Members</Title>
+          <Input className="mb-6" id="searchInput" placeholder="Search by name" value={formData.searchInput} onChange={handleChange} />
+          <Title>{formData.searchInput ? 'Search Results' : 'All Members'}</Title>
           <div className="max-h-[250px] overflow-y-scroll hide-scrollbar">
-            {filteredMembers.map((data, i) => (
-              <ProfileCard key={i} name={data.name} role={data?.role} />
-            ))}
-            {filteredMembers.length === 0 && <p>No members found</p>}
+            {formData.searchInput
+              ? filteredMembers.length > 0
+                ? filteredMembers.map((data) => (
+<MemberCard key={data.id} member={data} onAdd={addMember} />
+                  ))
+                : <p>No search results found</p>
+              : users.map((data) => (<ProfileCard key={data.id} id={data.id} name={data.name} role={data.role} />))}
           </div>
         </div>
       </Modal>

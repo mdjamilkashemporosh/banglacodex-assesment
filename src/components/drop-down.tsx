@@ -2,8 +2,24 @@ import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { FaChevronDown } from 'react-icons/fa';
 import { roles as data } from '../data/role';
 import { DropdownProps } from '../types/dropDownProps';
+import { useUserContext } from '../userContext';
+// @ts-ignore
+export default function Dropdown({ onChange, defaultOption, userId }: DropdownProps) {
+  const { users, setUsers } = useUserContext();
 
-export default function Dropdown({ onChange, defaultOption }: DropdownProps) {
+  // Handle dropdown selection and update the user's role
+  const handleChange = (selectedRole: string) => {
+    // Update the role in the context
+    setUsers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === userId ? { ...user, role: selectedRole } : user
+      )
+    );
+
+    // Trigger the onChange callback if provided
+    onChange(selectedRole);
+  };
+
   return (
     <div className="">
       <Menu>
@@ -22,7 +38,7 @@ export default function Dropdown({ onChange, defaultOption }: DropdownProps) {
                   className={`${
                     active ? 'bg-gray-700' : ''
                   } group flex w-full items-center rounded-lg py-2 px-3`}
-                  onClick={() => onChange(item)}
+                  onClick={() => handleChange(item)}
                 >
                   {item}
                 </button>

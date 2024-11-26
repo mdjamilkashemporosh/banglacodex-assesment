@@ -1,6 +1,11 @@
-type Role = "admin" | "member" | "viewer" | string;
-
-export interface User {
+export type UserType = {
+    id: string;
     name: string;
-    role: Role;
-}
+    role: string;
+  };
+  
+export type UserContextType = {
+    users: UserType[];
+    allUsers: UserType[];
+    setUsers: React.Dispatch<React.SetStateAction<UserType[]>>;
+};
