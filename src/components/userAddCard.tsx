@@ -17,7 +17,7 @@ const MemberCard: FC<MemberCardProps> = ({ member, onAdd }) => {
           alt={member?.name}
           className="w-8 h-8 mr-3 rounded-full"
         />
-        <p className="text-lg font-semibold">{member?.name}</p>
+        <p className="text-base">{member?.name}</p>
       </div>
       <div className="text-center flex items-center gap-6">
 

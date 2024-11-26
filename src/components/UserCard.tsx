@@ -23,7 +23,7 @@ const UserCard: FC<UserType> = ({ id, name, role }) => {
                     alt={name}
                     className="w-8 h-8 mr-3 rounded-full"
                 />
-                <p className="text-lg font-semibold">{name}</p>
+                <p className="text-base">{name}</p>
             </div>
             <div className="text-center flex items-center gap-6">
                 <Dropdown onChange={handleDropdownChange} defaultOption={role} userId={id} />
