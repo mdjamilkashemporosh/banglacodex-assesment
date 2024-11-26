@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ButtonProps } from '../../types/buttonProps';
+import { ButtonProps } from '../types/buttonProps';
 
 const Button: FC<ButtonProps> = ({ onClick, children, className = '', type = 'button', disabled = false, ariaLabel }) => {
   return (

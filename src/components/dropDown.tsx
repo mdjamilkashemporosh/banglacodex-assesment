@@ -3,40 +3,36 @@ import { FaChevronDown } from 'react-icons/fa';
 import { roles as data } from '../data/role';
 import { DropdownProps } from '../types/dropDownProps';
 import { useUserContext } from '../userContext';
-// @ts-ignore
-export default function Dropdown({ onChange, defaultOption, userId }: DropdownProps) {
-  const { users, setUsers } = useUserContext();
 
-  // Handle dropdown selection and update the user's role
+export default function Dropdown({ onChange, defaultOption, userId }: DropdownProps) {
+  const { setUsers } = useUserContext();
+
   const handleChange = (selectedRole: string) => {
-    // Update the role in the context
     setUsers((prevUsers) =>
       prevUsers.map((user) =>
         user.id === userId ? { ...user, role: selectedRole } : user
       )
     );
-
-    // Trigger the onChange callback if provided
     onChange(selectedRole);
   };
 
   return (
     <div className="">
       <Menu>
-        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-gray-800 py-1.5 px-3 text-sm font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-700 focus:outline-none">
+        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-white py-1.5 px-3 text-sm font-semibold text-gray-700 hover:bg-gray-100 focus:outline-none">
           {defaultOption || 'Select Option'}
-          <FaChevronDown className="text-white/60" />
+          <FaChevronDown className="text-gray-500" />
         </MenuButton>
 
         <MenuItems
-          className="absolute mt-2 w-52 origin-top-right rounded-xl bg-gray-800 border border-gray-700 p-1 text-sm text-white shadow-lg focus:outline-none"
+          className="absolute mt-2 w-52 origin-top-right rounded-xl bg-white border border-gray-300 p-1 text-sm text-gray-700 focus:outline-none"
         >
           {data.map((item, index) => (
             <MenuItem key={index}>
               {({ active }) => (
                 <button
                   className={`${
-                    active ? 'bg-gray-700' : ''
+                    active ? 'bg-gray-100' : ''
                   } group flex w-full items-center rounded-lg py-2 px-3`}
                   onClick={() => handleChange(item)}
                 >

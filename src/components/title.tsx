@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { TitleProps } from '../../types/titleProps';
+import { TitleProps } from '../types/titleProps';
 
 const Title: FC<TitleProps> = ({ children, className }) => {
     return (
